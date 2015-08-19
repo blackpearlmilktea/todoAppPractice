@@ -1,5 +1,6 @@
 function addEvents(){
   document.getElementById("todo-entry").addEventListener("keypress", enterToDo);
+  document.getElementById("remove_completed").addEventListener("click", removeCompleted);
 };
 
 addEvents();
@@ -27,7 +28,7 @@ function enterToDo(e) {
 
 //function for listening for checkbox event to change look of item
 function toggleComplete() {
-  var todo_text = this.nextElementSibling;
+  var todo_text = this.parentElement;
   if (this.checked){
     todo_text.className = "complete";
   }
@@ -37,4 +38,10 @@ function toggleComplete() {
 }
 
 
-  // function for removing items when link for remove completed checked
+// function for removing items when link for remove completed checked
+function removeCompleted() {
+  var completed = document.getElementsByClassName('complete');
+  while(completed.length !== 0){
+    completed[0].parentElement.removeChild(completed[0]);
+  }
+}

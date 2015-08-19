@@ -1,5 +1,3 @@
-<!-- Need to have an input field for todo item and submit button or just hit enter could work then display section that takes in inputted item and displays it in list of todo items
-with each one having a checkbox next to it -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,10 +9,11 @@ with each one having a checkbox next to it -->
     <div id="todo-form">
       <input type="text" id="todo-entry" placeholder="Enter a todo item"/>
     </div>
-    <div id="todo-list">
-      <ul>
+    <div id="todo-list-container">
+      <ul id= "todo-list">
       </ul>
     </div>
+    <button id="remove_completed">Remove completed items</button>
   <script type="text/javascript" src="todo.js"></script>
   </body>
 </html>
