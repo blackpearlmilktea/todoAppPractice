@@ -16,11 +16,11 @@ function enterToDo(e) {
     att.value = "checkbox";
     checkbox.setAttributeNode(att);
     checkbox.addEventListener("click", toggleComplete)
-    var span = document.createElement("span");
+    var label = document.createElement("label");
     var text = document.createTextNode(todo_text);
-    span.appendChild(text);
+    label.appendChild(text);
     todo_item.appendChild(checkbox);
-    todo_item.appendChild(span);
+    todo_item.appendChild(label);
     document.getElementById("todo-list").appendChild(todo_item);
     document.getElementById("todo-entry").value = "";
   }

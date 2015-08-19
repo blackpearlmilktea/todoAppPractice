@@ -1,5 +1,6 @@
 #todo-list {
-  background-color: #efefef
+  background-color: #efefef;
+  list-style: none;
 }
 
 .complete {
