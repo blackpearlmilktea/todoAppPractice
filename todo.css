@@ -1,3 +1,7 @@
 #todo-list {
   background-color: #efefef
 }
+
+.complete {
+  text-decoration: line-through;
+}
