@@ -16,9 +16,6 @@ TodoView.prototype.render = function(){
 // View of an Individual Todo Item
 var TodoItemView = function(todoItem){
   var todo_item = document.createElement("li");
-  var dataAtt = document.createAttribute("data-id");
-  dataAtt.value = todoItem.id;
-  todo_item.setAttributeNode(dataAtt);
   todo_item.setAttribute("data-id", todoItem.id);
   todo_item.innerHTML = '<input type="checkbox"/><label></label>';
   if(todoItem.completed){
