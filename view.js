@@ -19,7 +19,12 @@ var TodoItemView = function(todoItem){
   var dataAtt = document.createAttribute("data-id");
   dataAtt.value = todoItem.id;
   todo_item.setAttributeNode(dataAtt);
+  todo_item.setAttribute("data-id", todoItem.id);
   todo_item.innerHTML = '<input type="checkbox"/><label></label>';
+  if(todoItem.completed){
+    todo_item.children[0].checked = true;
+    todo_item.setAttribute("class", "complete");
+  };
   todo_item.children[0].addEventListener("click", toggleComplete);
   todo_item.children[1].appendChild(document.createTextNode(todoItem.title));
   return todo_item;
