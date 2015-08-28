@@ -43,7 +43,39 @@ function toggleComplete() {
     todoText.className = "";
     todoItem.toggleCompleted();
   }
-}
+};
+
+// function for changing todo text
+function editText(){
+  var todoText = this.parentElement;
+  var id = parseInt(todoText.getAttribute('data-id'));
+  var todoItem = Controller.todoList.getItem(id);
+  this.innerHTML = '<input type="text" value="' + todoItem.title + '"></input>';
+  var editField = this.children[0];
+  editField.focus();
+  editField.addEventListener("keypress", enterNewTodo);
+  editField.addEventListener("blur", removeEditing);
+};
+
+function enterNewTodo(e){
+  var todoText = this.value.trim();
+  var ENTER_KEY = 13;
+  if (e.keyCode === ENTER_KEY && todoText !== ""){
+    var todoLabel = this.parentElement;
+    var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
+    var todoItem = Controller.todoList.getItem(id);
+    todoItem.editItem(todoText);
+    this.blur();
+  };
+};
+
+function removeEditing(){
+  var todoLabel = this.parentElement;
+  var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
+  var todoItem = Controller.todoList.getItem(id);
+  todoLabel.children[0].remove();
+  todoLabel.innerHTML = todoItem.title;
+};
 
 // function for removing items when button for remove completed clicked
 function removeCompleted() {
@@ -59,7 +91,7 @@ function removeCompleted() {
     list.removeItem(listToRemove[i]);
   }
   Controller.todoView.render();
-}
+};
 
 var Controller = new TodoController();
 Controller.load();

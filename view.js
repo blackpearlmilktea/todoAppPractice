@@ -24,5 +24,6 @@ var TodoItemView = function(todoItem){
   };
   todo_item.children[0].addEventListener("click", toggleComplete);
   todo_item.children[1].appendChild(document.createTextNode(todoItem.title));
+  todo_item.children[1].addEventListener("dblclick", editText);
   return todo_item;
 };
