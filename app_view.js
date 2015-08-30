@@ -1,12 +1,11 @@
-// todo rename to appview
-// Controller
-var TodoController = function(){
-  this.todoList = new TodoList();//TODO this could be stored in just TodoListView
-  this.todoView = new TodoListView(this.todoList);
+// Main App View
+var AppView = function(){
+  //this.todoList = new TodoList();//TODO this could be stored in just TodoListView
+  this.todoView = new TodoListView();
   return this;
 }
 
-TodoController.prototype.load = function(){
+AppView.prototype.load = function(){
   this.todoView.render();
   addEvents();
 }
@@ -25,8 +24,8 @@ function enterToDo(e) {
   var ENTER_KEY = 13;
   if (e.keyCode === ENTER_KEY && todoText !== ""){
     var newTodo = new TodoItem(todoText);
-    Controller.todoList.addItem(newTodo);
-    Controller.todoView.render();
+    mainView.todoView.todoList.addItem(newTodo);
+    mainView.todoView.render();
     document.getElementById("todo-entry").value = "";
   }
 };
@@ -36,7 +35,7 @@ function enterToDo(e) {
 function editText(){
   var todoText = this.parentElement;
   var id = parseInt(todoText.getAttribute('data-id'));
-  var todoItem = Controller.todoList.getItem(id);
+  var todoItem = mainView.todoView.todoList.getItem(id);
   this.innerHTML = '<input type="text" value="' + todoItem.title + '"></input>';
   var editField = this.children[0];
   editField.focus();
@@ -50,7 +49,7 @@ function enterNewTodo(e){
   if (e.keyCode === ENTER_KEY && todoText !== ""){
     var todoLabel = this.parentElement;
     var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
-    var todoItem = Controller.todoList.getItem(id);
+    var todoItem = mainView.todoView.todoList.getItem(id);
     todoItem.editItem(todoText);
     this.blur();
   };
@@ -59,14 +58,14 @@ function enterNewTodo(e){
 function removeEditing(){
   var todoLabel = this.parentElement;
   var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
-  var todoItem = Controller.todoList.getItem(id);
+  var todoItem = mainView.todoView.todoList.getItem(id);
   todoLabel.children[0].remove();
   todoLabel.innerHTML = todoItem.title;
 };
 
 // function for removing items when button for remove completed clicked
 function removeCompleted() {
-  var list = Controller.todoList;
+  var list = mainView.todoView.todoList;
   var listToRemove = [];
 
   for(var i = 0; i < list.todos.length; i++){
@@ -77,8 +76,8 @@ function removeCompleted() {
   for(var i =0; i < listToRemove.length; i++){
     list.removeItem(listToRemove[i]);
   }
-  Controller.todoView.render();
+  mainView.todoView.render();
 };
 
-var Controller = new TodoController();
-Controller.load();
+var mainView = new AppView();
+mainView.load();

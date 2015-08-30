@@ -1,6 +1,6 @@
 // View of Todo List
-var TodoListView = function(todolist){
-  this.todoList = todolist;
+var TodoListView = function(){
+  this.todoList = new TodoList();
   return this;
 };
 
@@ -9,6 +9,6 @@ TodoListView.prototype.render = function(){
   list.innerHTML = "";
   for(var i = 0; i < this.todoList.todos.length; i++){
     var item = new TodoItemView(this.todoList.todos[i]);
-    list.appendChild(item);
+    item.render();
   }
 };
