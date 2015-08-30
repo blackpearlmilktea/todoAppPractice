@@ -1,7 +1,8 @@
+// todo rename to appview
 // Controller
 var TodoController = function(){
-  this.todoList = new TodoList();
-  this.todoView = new TodoView(this.todoList);
+  this.todoList = new TodoList();//TODO this could be stored in just TodoListView
+  this.todoView = new TodoListView(this.todoList);
   return this;
 }
 
@@ -30,20 +31,6 @@ function enterToDo(e) {
   }
 };
 
-//function for listening for checkbox event to change look of item
-function toggleComplete() {
-  var todoText = this.parentElement;
-  var id = parseInt(todoText.getAttribute('data-id'));
-  var todoItem = Controller.todoList.getItem(id);
-  if (this.checked){
-    todoText.className = "complete";
-    todoItem.toggleCompleted();
-  }
-  else{
-    todoText.className = "";
-    todoItem.toggleCompleted();
-  }
-};
 
 // function for changing todo text
 function editText(){
