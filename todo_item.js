@@ -11,10 +11,10 @@ var TodoItem = function(title) {
   return this;
 };
 
-TodoItem.prototype.toggleCompleted = function(){
+TodoItem.prototype.toggleCompleted = function() {
   this.completed = !this.completed;
 };
 
-TodoItem.prototype.editItem = function(newText){
+TodoItem.prototype.editItem = function(newText) {
   this.title = newText;
 };

@@ -1,82 +1,34 @@
 // Main App View
 var AppView = function(){
-  //this.todoList = new TodoList();//TODO this could be stored in just TodoListView
-  this.todoView = new TodoListView();
+  this.todoListView = new TodoListView();
   return this;
 }
 
 AppView.prototype.load = function(){
-  this.todoView.render();
-  addEvents();
+  this.todoListView.render();
+  this.addEvents();
 }
 
-// Events
-// TODO: Should these methods be part of the view or the controller?
-// Also your controller and view are slightly redundant since this is a small app.
-// maybe you only need one class.
-function addEvents(){
-  document.getElementById("todo-entry").addEventListener("keypress", enterToDo);
-  document.getElementById("remove_completed").addEventListener("click", removeCompleted);
+// Events for Textfield and Remove Completed button
+AppView.prototype.addEvents = function(){
+  document.getElementById("todo-entry").addEventListener("keypress", this.enterToDo.bind(this));
+  document.getElementById("remove_completed").addEventListener("click", this.removeCompleted.bind(this));
 };
 
-function enterToDo(e) {
+// function for adding new items when they are entered in textfield
+AppView.prototype.enterToDo = function(e) {
   var todoText = document.getElementById("todo-entry").value.trim();
   var ENTER_KEY = 13;
   if (e.keyCode === ENTER_KEY && todoText !== ""){
-    var newTodo = new TodoItem(todoText);
-    mainView.todoView.todoList.addItem(newTodo);
-    mainView.todoView.render();
+    // AppView tells todoListView to add an item
+    this.todoListView.addItem(todoText);
     document.getElementById("todo-entry").value = "";
   }
 };
 
-
-// function for changing todo text
-function editText(){
-  var todoText = this.parentElement;
-  var id = parseInt(todoText.getAttribute('data-id'));
-  var todoItem = mainView.todoView.todoList.getItem(id);
-  this.innerHTML = '<input type="text" value="' + todoItem.title + '"></input>';
-  var editField = this.children[0];
-  editField.focus();
-  editField.addEventListener("keypress", enterNewTodo);
-  editField.addEventListener("blur", removeEditing);
-};
-
-function enterNewTodo(e){
-  var todoText = this.value.trim();
-  var ENTER_KEY = 13;
-  if (e.keyCode === ENTER_KEY && todoText !== ""){
-    var todoLabel = this.parentElement;
-    var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
-    var todoItem = mainView.todoView.todoList.getItem(id);
-    todoItem.editItem(todoText);
-    this.blur();
-  };
-};
-
-function removeEditing(){
-  var todoLabel = this.parentElement;
-  var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
-  var todoItem = mainView.todoView.todoList.getItem(id);
-  todoLabel.children[0].remove();
-  todoLabel.innerHTML = todoItem.title;
-};
-
 // function for removing items when button for remove completed clicked
-function removeCompleted() {
-  var list = mainView.todoView.todoList;
-  var listToRemove = [];
-
-  for(var i = 0; i < list.todos.length; i++){
-    if(list.todos[i].completed){
-      listToRemove.push(list.todos[i]);
-    }
-  }
-  for(var i =0; i < listToRemove.length; i++){
-    list.removeItem(listToRemove[i]);
-  }
-  mainView.todoView.render();
+AppView.prototype.removeCompleted = function() {
+  this.todoListView.removeCompletedItems();
 };
 
 var mainView = new AppView();
