@@ -2,25 +2,8 @@
 var TodoItemView = function(todoItem) {
   this.todo = todoItem;
   this.template = this.getTemplate();
+  this.addEvents();
   return this;
-};
-
-TodoItemView.prototype.render = function() {
-  var todoView = document.createElement("li");
-  todoView.setAttribute("data-id", this.todo.id);
-  todoView.innerHTML = '<input type="checkbox"/><label></label>';
-  var checkbox = todoView.getElementsByTagName("input")[0];
-  var label = todoView.getElementsByTagName("label")[0];
-  if(this.todo.completed){
-    checkbox.checked = true;
-    todoView.setAttribute("class", "complete");
-  };
-  checkbox.addEventListener("click", this.toggleComplete.bind(this));
-  label.appendChild(document.createTextNode(this.todo.title));
-  //label.addEventListener("dblclick", this.editText.bind(this));
-  // Add new View to list
-  var list = document.getElementById("todo-list");
-  list.appendChild(todoView);
 };
 
 TodoItemView.prototype.getTemplate = function() {
@@ -29,59 +12,55 @@ TodoItemView.prototype.getTemplate = function() {
   todoView.innerHTML = '<input type="checkbox"/><label></label>';
   var checkbox = todoView.getElementsByTagName("input")[0];
   var label = todoView.getElementsByTagName("label")[0];
-  if(this.todo.completed){
-    checkbox.checked = true;
+  if(this.todo.completed) {
+    checkbox.setAttribute("checked", true);
     todoView.setAttribute("class", "complete");
   };
-  checkbox.addEventListener("click", this.toggleComplete.bind(this));
   label.appendChild(document.createTextNode(this.todo.title));
-  //label.addEventListener("dblclick", this.editText.bind(this));
   return todoView;
 };
 
-// TODO toggleComplete and editText should move to todolistview
+TodoItemView.prototype.addEvents = function() {
+  var checkbox = this.template.getElementsByTagName("input")[0];
+  var label = this.template.getElementsByTagName("label")[0];
+  checkbox.addEventListener("click", this.toggleComplete.bind(this));
+  label.addEventListener("dblclick", this.editText.bind(this));
+};
+
 //function for listening for checkbox event to change look of item
 TodoItemView.prototype.toggleComplete = function() {
   var checkbox = this.template.getElementsByTagName("input")[0];
-  if (checkbox.checked){
-    this.template.className = "complete";
+  if (checkbox.checked) {
+    this.template.setAttribute("class", "complete");
     this.todo.toggleCompleted();
   }
-  else{
-    this.template.className = "";
+  else {
+    this.template.removeAttribute("class", "complete");
     this.todo.toggleCompleted();
   }
 };
 
-
 // function for changing todo text
-// function editText(){
-//   var todoText = this.parentElement;
-//   var id = parseInt(todoText.getAttribute('data-id'));
-//   var todoItem = mainView.todoListView.todoList.getItem(id);
-//   this.innerHTML = '<input type="text" value="' + todoItem.title + '"></input>';
-//   var editField = this.children[0];
-//   editField.focus();
-//   editField.addEventListener("keypress", enterNewTodo);
-//   editField.addEventListener("blur", removeEditing);
-// };
+TodoItemView.prototype.editText = function() {
+  this.template.innerHTML = '<input type="text" value="' + this.todo.title + '"></input>';
+  var editField = this.template.getElementsByTagName("input")[0];
+  editField.focus();
+  editField.addEventListener("keypress", this.enterNewTodo.bind(this));
+  editField.addEventListener("blur", this.removeEditing.bind(this));
+};
 
-// function enterNewTodo(e){
-//   var todoText = this.value.trim();
-//   var ENTER_KEY = 13;
-//   if (e.keyCode === ENTER_KEY && todoText !== ""){
-//     var todoLabel = this.parentElement;
-//     var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
-//     var todoItem = mainView.todoListView.todoList.getItem(id);
-//     todoItem.editItem(todoText);
-//     this.blur();
-//   };
-// };
+// function for entering in the new todo text upon Enter key press
+TodoItemView.prototype.enterNewTodo = function(e) {
+  var editField = this.template.getElementsByTagName("input")[0];
+  var newTodoText = editField.value.trim();
+  var ENTER_KEY = 13;
+  if (e.keyCode === ENTER_KEY && newTodoText !== "") {
+    this.todo.editItemText(newTodoText);
+    editField.blur();
+  };
+};
 
-// function removeEditing(){
-//   var todoLabel = this.parentElement;
-//   var id = parseInt(todoLabel.parentElement.getAttribute('data-id'));
-//   var todoItem = mainView.todoListView.todoList.getItem(id);
-//   todoLabel.children[0].remove();
-//   todoLabel.innerHTML = todoItem.title;
-// };
+TodoItemView.prototype.removeEditing = function() {
+  this.template.innerHTML = this.getTemplate().innerHTML;
+  this.addEvents();
+};

@@ -17,7 +17,7 @@ TodoList.prototype.removeItem = function(item) {
   }
 };
 
-TodoList.prototype.getItem = function(id) {
+TodoList.prototype.getItemById = function(id) {
   for(var i = 0; i < this.todos.length; i++) {
     if(this.todos[i].id === id) {
       return this.todos[i];
@@ -26,10 +26,10 @@ TodoList.prototype.getItem = function(id) {
   return null;
 };
 
-TodoList.prototype.getLength = function() {
+TodoList.prototype.getListLength = function() {
   return this.todos.length;
 };
 
-TodoList.prototype.getItem = function(int) {
-  return this.todos[int];
+TodoList.prototype.getNthItem = function(n) {
+  return this.todos[n];
 };

@@ -15,6 +15,6 @@ TodoItem.prototype.toggleCompleted = function() {
   this.completed = !this.completed;
 };
 
-TodoItem.prototype.editItem = function(newText) {
+TodoItem.prototype.editItemText = function(newText) {
   this.title = newText;
 };
