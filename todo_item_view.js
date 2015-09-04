@@ -55,7 +55,6 @@ TodoItemView.prototype.enterNewTodo = function(e) {
 };
 
 TodoItemView.prototype.removeEditing = function() {
-  // bug here need to fix.
-  this.template.html(this.getTemplate());
+  this.template.replaceWith(this.getTemplate());
   this.addEvents();
 };
