@@ -5,11 +5,10 @@ var TodoListView = function() {
 };
 
 TodoListView.prototype.render = function() {
-  var list = document.getElementById("todo-list");
-  list.innerHTML = "";
+  $("#todo-list").html("");
   for(var i = 0; i < this.todoList.getListLength(); i++) {
     var todoItemView = new TodoItemView(this.todoList.getNthItem(i));
-    list.appendChild(todoItemView.template);
+    $("#todo-list").append(todoItemView.template);
   }
 };
 
