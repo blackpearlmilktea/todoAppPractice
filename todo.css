@@ -10,12 +10,6 @@
   padding: 0;
 }
 
-#todo-list {
-  width: 490px;
-  list-style: none;
-  padding: 0;
-}
-
 #todo-list li {
   padding: 5px 0;
 }
@@ -32,3 +26,4 @@
   text-decoration: line-through;
   color: #CCC;
 }
+

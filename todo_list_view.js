@@ -23,15 +23,23 @@ TodoListView.prototype.removeItem = function(item) {
   this.render();
 };
 
+
+//TODO this is a place where underscore is useful
 TodoListView.prototype.removeCompletedItems = function() {
+  // I have to store the indexes I want to remove
+  // before removing any items because removing an item
+  // changes the loop index
   var itemsToRemove = [];
 
+  // First find the items to remove
   for(var i = 0; i < this.todoList.getListLength(); i++) {
     var item = this.todoList.getNthItem(i);
     if(item.completed) {
       itemsToRemove.push(item);
     }
   }
+
+  // Second remove all the marked items
   for(var i =0; i < itemsToRemove.length; i++) {
     this.removeItem(itemsToRemove[i]);
   }

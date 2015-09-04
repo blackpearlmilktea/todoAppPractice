@@ -1,4 +1,5 @@
 // View of an Individual Todo Item
+// TODO standardize on the name "todo" or "todoItem"
 var TodoItemView = function(todoItem) {
   this.todo = todoItem;
   this.template = this.getTemplate();
@@ -6,6 +7,7 @@ var TodoItemView = function(todoItem) {
   return this;
 };
 
+//TODO This is a place where Mustache templates are useful.
 TodoItemView.prototype.getTemplate = function() {
   var todoView = document.createElement("li");
   todoView.setAttribute("data-id", this.todo.id);

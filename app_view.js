@@ -9,10 +9,12 @@ AppView.prototype.load = function(){
   this.addEvents();
 }
 
+//can remove unneeded comments when code explains clearly
 // Events for Textfield and Remove Completed button
-AppView.prototype.addEvents = function(){
+AppView.prototype.addEvents = function() {
+  // be consistent about dash and underscore naming
   document.getElementById("todo-entry").addEventListener("keypress", this.enterToDo.bind(this));
-  document.getElementById("remove_completed").addEventListener("click", this.removeCompleted.bind(this));
+  document.getElementById("remove_button").addEventListener("click", this.removeCompleted.bind(this));
 };
 
 // function for adding new items when they are entered in textfield
