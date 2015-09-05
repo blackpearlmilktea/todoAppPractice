@@ -9,14 +9,8 @@ TodoList.prototype.addTodo = function(title) {
   this.todos.push(newTodo);
 };
 
-
-// TODO This is a place where underscore is useful
 TodoList.prototype.removeTodo = function(todo) {
-  for(var i = 0; i < this.todos.length; i++) {
-    if(this.todos[i].id === todo.id) {
-      this.todos.splice(i, 1);
-    }
-  }
+  this.todos = _.without(this.todos, todo);
 };
 
 TodoList.prototype.getListLength = function() {
@@ -25,4 +19,8 @@ TodoList.prototype.getListLength = function() {
 
 TodoList.prototype.getNthTodo = function(n) {
   return this.todos[n];
+};
+
+TodoList.prototype.removeCompletedTodos = function() {
+  this.todos = _.filter(this.todos, function(todo){ return !todo.completed });
 };
