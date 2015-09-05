@@ -1,36 +1,30 @@
 // Main App View
-var AppView = function(){
+var AppView = function() {
   this.todoListView = new TodoListView();
   return this;
-}
-
-AppView.prototype.load = function(){
-  this.todoListView.render();
-  this.addEvents();
-}
-
-//can remove unneeded comments when code explains clearly
-// Events for Textfield and Remove Completed button
-// be consistent about dash and underscore naming
-AppView.prototype.addEvents = function(){
-  $("#todo-entry").on("keypress", this.enterToDo.bind(this));
-  $("#remove_completed").on("click", this.removeCompleted.bind(this));
 };
 
-// function for adding new items when they are entered in textfield
-AppView.prototype.enterToDo = function(e) {
-  var todoText = $("#todo-entry").val().trim();
+AppView.prototype.load = function() {
+  this.todoListView.render();
+  this.addEvents();
+};
+
+AppView.prototype.addEvents = function() {
+  $("#todo-entry").on("keypress", this.enterTodo.bind(this));
+  $("#remove-button").on("click", this.removeCompleted.bind(this));
+};
+
+AppView.prototype.enterTodo = function(e) {
+  var todoTitle = $("#todo-entry").val().trim();
   var ENTER_KEY = 13;
-  if (e.keyCode === ENTER_KEY && todoText !== ""){
-    // AppView tells todoListView to add an item
-    this.todoListView.addItem(todoText);
+  if (e.keyCode === ENTER_KEY && todoTitle !== "") {
+    this.todoListView.addTodo(todoTitle);
     $("#todo-entry").val("");
   }
 };
 
-// function for removing items when button for remove completed clicked
 AppView.prototype.removeCompleted = function() {
-  this.todoListView.removeCompletedItems();
+  this.todoListView.removeCompletedTodos();
 };
 
 var mainView = new AppView();
