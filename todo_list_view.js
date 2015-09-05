@@ -8,7 +8,7 @@ TodoListView.prototype.render = function() {
   $("#todo-list").html("");
   for(var i = 0; i < this.todoList.getListLength(); i++) {
     var todoItemView = new TodoItemView(this.todoList.getNthItem(i));
-    $("#todo-list").append(todoItemView.template);
+    $("#todo-list").append(todoItemView.$element);
   }
 };
 
