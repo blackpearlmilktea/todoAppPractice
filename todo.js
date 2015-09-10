@@ -1,20 +1,19 @@
 var nextTodoId = 1;
 
-// Model for a single Todo
-var Todo = function(title) {
-  this.id = nextTodoId;
-  this.title = title;
-  this.completed = false;
-
-  nextTodoId += 1;
-
-  return this;
-};
-
-Todo.prototype.toggleCompleted = function() {
-  this.completed = !this.completed;
-};
-
-Todo.prototype.editTitle = function(newTitle) {
-  this.title = newTitle;
-};
+var Todo = Backbone.Model.extend({
+  defaults: {
+    id: '',
+    title: '',
+    completed: false
+  },
+  initialize: function(){
+    this.set({id: nextTodoId});
+    nextTodoId += 1;
+  },
+  toggleCompleted: function() {
+    this.completed = !this.completed;
+  },
+  editTitle: function(newTitle) {
+    this.title = newTitle;
+  }
+});
