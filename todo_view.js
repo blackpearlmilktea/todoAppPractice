@@ -51,8 +51,8 @@ TodoView.prototype.enterNewTodo = function(e) {
 };
 
 TodoView.prototype.removeEditing = function() {
-  var newElement = this.$buildElement();
-  this.$element.replaceWith(newElement);
-  this.$element = newElement;
+  var $newElement = this.$buildElement();
+  this.$element.replaceWith($newElement);
+  this.$element = $newElement;
   this.addEvents();
 };
