@@ -14,7 +14,6 @@
 //   editField.on("blur", this.removeEditing.bind(this));
 // };
 
-// TodoView.prototype.enterNewTodo = function(e) {
 //   var editField = this.$element.find("input");
 //   var newTodoTitle = editField.val().trim();
 //   var ENTER_KEY = 13;
