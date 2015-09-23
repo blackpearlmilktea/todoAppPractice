@@ -1,32 +1,8 @@
 // TODO:
 // SUPER MEGA EXTRA CREDIT make a branch that converts to Backbone!!!!
+// Local Storage extra extra
+// review javascript syntax
 
-
-// View of an Individual Todo Item
-// var TodoView = function(todo) {
-//   this.todo = todo;
-//   this.$element = this.$buildElement();
-//   this.addEvents();
-//   return this;
-// };
-
-// TodoView.prototype.$buildElement = function() {
-//   var template = '<li data-id={{id}} {{#completed}}class="complete"{{/completed}}>' +
-//                  '<input type="checkbox" {{#completed}}checked{{/completed}}/>' +
-//                  '<label>{{title}}</label></li>'
-//   var element = Mustache.render(template, this.todo);
-//   return $(element);
-// };
-
-// TodoView.prototype.addEvents = function() {
-//   this.$element.find("input").on("click", this.toggleComplete.bind(this));
-//   this.$element.find("label").on("dblclick", this.editTitle.bind(this));
-// };
-
-// TodoView.prototype.toggleComplete = function() {
-//   this.$element.toggleClass("complete");
-//   this.todo.toggleCompleted();
-// };
 
 // TodoView.prototype.editTitle = function() {
 //   var template = '<input type="text" value="{{title}}"/>'
@@ -57,9 +33,38 @@
 
 var TodoView = Backbone.View.extend({
   model: Todo,
-  tagName: "li",
-  template: '<li data-id={{id}} {{#completed}}class="complete"{{/completed}}>' +
-            '<input type="checkbox" {{#completed}}checked{{/completed}}/>' +
-            '<label>{{title}}</label></li>'
+  tagName: 'li',
+  template: '<input class="completed-checkbox" type="checkbox" {{#completed}}checked{{/completed}}/>' +
+            '<label class="todo-title">{{title}}</label>',
 
+  initialize: function() {
+    this.$el.attr("data-id", this.model.id);
+  },
+
+  render: function() {
+    this.$el.html(Mustache.render(this.template, this.model.attributes));
+    return this;
+  },
+
+  events: {
+    'click .completed-checkbox': 'toggleCompleted',
+    'dblclick .todo-title': 'editTitle'
+  },
+
+  toggleCompleted: function() {
+    this.model.toggleCompleted();
+    this.$el.toggleClass("complete");
+  },
+
+  editTitle: function() {
+
+  },
+
+  enterNewTodo: function(e) {
+
+  },
+
+  removeEditing: function() {
+
+  }
 });
