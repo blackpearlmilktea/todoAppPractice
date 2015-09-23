@@ -6,14 +6,17 @@ var Todo = Backbone.Model.extend({
     title: '',
     completed: false
   },
-  initialize: function(){
+
+  initialize: function() {
     this.set({id: nextTodoId});
     nextTodoId += 1;
   },
+
   toggleCompleted: function() {
-    this.completed = !this.completed;
+    this.set('completed', !this.get('completed'));
   },
+
   editTitle: function(newTitle) {
-    this.title = newTitle;
+    this.set('title', newTitle);
   }
 });
