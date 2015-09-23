@@ -35,7 +35,7 @@ var AppView = Backbone.View.extend({
   },
 
   removeCompleted: function() {
-    this.todoListView.removeCompletedTodos();
+    this.todoList.removeCompletedTodos();
   }
 });
 
