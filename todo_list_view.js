@@ -1,15 +1,24 @@
 // View for the Todo List
 
 var TodoListView = Backbone.View.extend({
-  el: '#todo-list-container',
+  tagName: 'ul',
+  id: 'todo-list',
 
-  render: function(){
-
+  initialize: function(todoList) {
+    this.todoList = todoList;
+    this.todoList.on('add', _.bind(this.appendTodoView, this));
+    // so might listen for reset on todolist, so need to add html = "" to render
   },
-  addTodo: function(todoTitle){
 
+  render: function() {
+    this.todoList.each(function(todo){this.appendTodoView(todo)}, this);
   },
-  removeCompletedTodos: function(){
+
+  appendTodoView: function(newTodo) {
+    this.$el.append(new TodoView({model: newTodo}).render().el);
+  },
+
+  removeCompletedTodos: function() {
 
   }
 });

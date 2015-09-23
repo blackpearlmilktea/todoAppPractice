@@ -7,14 +7,16 @@ var AppView = Backbone.View.extend({
             '<div id="todo-list-container"></div>' +
             '<button id="remove-button">Remove completed items</button>',
 
-  initialize: function(){
-    this.todoListView = new TodoListView();
+  initialize: function() {
     this.render();
   },
 
-  render: function(){
+  render: function() {
     this.$el.html(this.template);
+    this.todoList = new TodoList();
+    this.todoListView = new TodoListView(this.todoList);
     this.todoListView.render();
+    $('#todo-list-container').append(this.todoListView.$el);
   },
 
   events: {
@@ -22,16 +24,17 @@ var AppView = Backbone.View.extend({
     'click #remove-button': 'removeCompleted'
   },
 
-  enterTodo: function(e){
+  enterTodo: function(e) {
     var todoTitle = $("#todo-entry").val().trim();
     var ENTER_KEY = 13;
     if (e.keyCode === ENTER_KEY && todoTitle !== "") {
-      this.todoListView.addTodo(todoTitle);
+      var newTodo = new Todo({title: todoTitle});
+      this.todoList.add([newTodo]);
       $("#todo-entry").val("");
     }
   },
 
-  removeCompleted: function(){
+  removeCompleted: function() {
     this.todoListView.removeCompletedTodos();
   }
 });
