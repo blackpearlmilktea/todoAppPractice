@@ -15,8 +15,11 @@ var AppView = Backbone.View.extend({
     this.$el.html(this.template);
     this.todoList = new TodoList();
     var localTodoList = JSON.parse(localStorage.getItem("todoList"));
-    if (this.todoList.isEmpty() && localTodoList != null) {
-      this.todoList.reset(localTodoList)
+    if (localTodoList != null) {
+      this.todoList.reset(localTodoList);
+      // Reset the localTodoList because the reset function on a collection
+      // Reinitalizes all the models in it, causing them to get new ids
+      localStorage.setItem("todoList", JSON.stringify(this.todoList));
     }
     this.todoListView = new TodoListView(this.todoList);
     this.todoListView.render();
