@@ -14,6 +14,10 @@ var AppView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template);
     this.todoList = new TodoList();
+    var localTodoList = JSON.parse(localStorage.getItem("todoList"));
+    if (this.todoList.isEmpty() && localTodoList != null) {
+      this.todoList.reset(localTodoList)
+    }
     this.todoListView = new TodoListView(this.todoList);
     this.todoListView.render();
     $('#todo-list-container').append(this.todoListView.$el);
@@ -30,6 +34,7 @@ var AppView = Backbone.View.extend({
     if (e.keyCode === ENTER_KEY && todoTitle !== "") {
       var newTodo = new Todo({title: todoTitle});
       this.todoList.add([newTodo]);
+      localStorage.setItem("todoList", JSON.stringify(this.todoList));
       $("#todo-entry").val("");
     }
   },

@@ -10,6 +10,9 @@ var TodoView = Backbone.View.extend({
 
   render: function() {
     this.$el.html(Mustache.render(this.template, this.model.attributes));
+    if(this.model.get("completed")){
+      this.$el.addClass("complete");
+    }
     return this;
   },
 
@@ -19,6 +22,7 @@ var TodoView = Backbone.View.extend({
   },
 
   toggleCompleted: function() {
+    this.toggleLocalTodoCompleted();
     this.model.toggleCompleted();
     this.$el.toggleClass("complete");
   },
@@ -37,6 +41,7 @@ var TodoView = Backbone.View.extend({
     var newTodoTitle = editField.val().trim();
     var ENTER_KEY = 13;
     if (e.keyCode === ENTER_KEY && newTodoTitle !== "") {
+      this.editLocalTodoTitle(newTodoTitle);
       this.model.editTitle(newTodoTitle);
       editField.blur();
     };
@@ -44,5 +49,21 @@ var TodoView = Backbone.View.extend({
 
   removeEditing: function() {
     this.render();
+  },
+
+  editLocalTodoTitle: function (newTitle) {
+    var localTodoList = JSON.parse(localStorage.getItem("todoList"));
+    var todoToChange = _.findIndex(localTodoList, this.model.attributes);
+    localTodoList[todoToChange].title = newTitle;
+    localStorage.setItem("todoList", JSON.stringify(localTodoList))
+  },
+
+  toggleLocalTodoCompleted: function () {
+    var localTodoList = JSON.parse(localStorage.getItem("todoList"));
+    var todoToChange = _.findIndex(localTodoList, this.model.attributes);
+    if (todoToChange !== -1) {
+      localTodoList[todoToChange].completed = !localTodoList[todoToChange].completed;
+      localStorage.setItem("todoList", JSON.stringify(localTodoList));
+    }
   }
 });
