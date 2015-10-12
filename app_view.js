@@ -17,10 +17,6 @@ var AppView = Backbone.View.extend({
     var localTodoList = JSON.parse(localStorage.getItem("todoList"));
     if (localTodoList != null) {
       this.todoList.reset(localTodoList);
-      // Reset the localStorage.TodoList b/c the reset function on a collection
-      // Reinitalizes all the models in it causing them to get new ids
-      // If some todos were removed before the refresh then some ids of the local todoList could be off
-      localStorage.setItem("todoList", JSON.stringify(this.todoList));
     }
     this.todoListView = new TodoListView(this.todoList);
     this.todoListView.render();
@@ -38,7 +34,7 @@ var AppView = Backbone.View.extend({
     if (e.keyCode === ENTER_KEY && todoTitle !== "") {
       var newTodo = new Todo({title: todoTitle});
       this.todoList.add([newTodo]);
-      localStorage.setItem("todoList", JSON.stringify(this.todoList));
+      this.todoList.save();
       $("#todo-entry").val("");
     }
   },
