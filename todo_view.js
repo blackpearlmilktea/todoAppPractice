@@ -1,9 +1,3 @@
-// TODO:
-// Then use mustache templates to replace HTML creating code.
-// Read about CSS selector speed.
-// SUPER MEGA EXTRA CREDIT make a branch that converts to Backbone!!!!
-
-
 // View of an Individual Todo Item
 var TodoView = function(todo) {
   this.todo = todo;
